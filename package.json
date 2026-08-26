@@ -1,0 +1,37 @@
+{
+  "name": "openai-adapter",
+  "version": "1.0.0",
+  "description": "Local OpenAI-compatible adapter proxy for Google Vertex AI, Gemini, and other LLM providers",
+  "main": "src/index.js",
+  "bin": {
+    "openai-adapter": "bin/openai-adapter.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "mocha \"test/**/*.test.js\""
+  },
+  "keywords": [
+    "openai",
+    "vertex-ai",
+    "gemini",
+    "codex",
+    "proxy",
+    "adapter",
+    "llm",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "mocha": "^11.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
