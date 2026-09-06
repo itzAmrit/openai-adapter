@@ -70,6 +70,43 @@ Check health:
 curl http://127.0.0.1:8766/health
 ```
 
+### Use with Codex Desktop
+
+Create a separate Codex home so the Vertex configuration does not overwrite your
+normal ChatGPT-backed Codex profile:
+
+```bash
+mkdir -p "$HOME/.codex-vertex"
+```
+
+Add the following to `$HOME/.codex-vertex/config.toml`:
+
+```toml
+model_provider = "vertex_local"
+model = "gemini-3.7-flash"
+model_reasoning_effort = "medium"
+
+[model_providers.vertex_local]
+name = "Local Vertex AI"
+base_url = "http://127.0.0.1:8766/openai/v1"
+wire_api = "responses"
+supports_websockets = false
+requires_openai_auth = false
+request_max_retries = 1
+stream_max_retries = 1
+stream_idle_timeout_ms = 1200000
+```
+
+Start Codex Desktop with that profile:
+
+```bash
+CODEX_HOME="$HOME/.codex-vertex" /Applications/Codex.app/Contents/MacOS/Codex
+```
+
+The model name shown in Codex is an adapter alias. The actual Vertex model and
+fallback chain are controlled by `VERTEX_MODEL` and `VERTEX_FALLBACK_MODELS` in
+the adapter's `.env` file.
+
 ---
 
 ## Run as Background Service on macOS (Launchd)
@@ -82,6 +119,14 @@ To keep the adapter running in the background automatically across reboots:
 
 # Stop and uninstall daemon
 ./scripts/uninstall-launchd.sh
+```
+
+The installer registers `com.local.openai-adapter`. If an older local wrapper is
+already using the configured port, unload that wrapper before installing:
+
+```bash
+launchctl bootout "gui/$(id -u)/com.local.codex-vertex-adapter" 2>/dev/null || true
+./scripts/install-launchd.sh
 ```
 
 ---

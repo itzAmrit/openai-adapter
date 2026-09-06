@@ -1,6 +1,6 @@
 {
   "name": "openai-adapter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Local OpenAI-compatible adapter proxy for Google Vertex AI, Gemini, and other LLM providers",
   "main": "src/index.js",
   "bin": {
